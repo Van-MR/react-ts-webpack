@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import App from './App'
+import { StoreProvider } from './Store'
 
-export default function App():JSX.Element {
-  return (
-    <h6>hello ts</h6>
-  )
-}
-
-
-ReactDom.render(<App />,document.getElementById('app-root'));
+ReactDom.render(
+  <StoreProvider>
+      <App />
+  </StoreProvider>
+  ,document.getElementById('app-root'));
