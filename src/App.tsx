@@ -16,6 +16,7 @@ export default function App():JSX.Element {
   const {state,dispatch} = useContext(Store);
 
   useEffect(() => {
+      console.log(123);
       fetchData(URL)
   },[])
 
