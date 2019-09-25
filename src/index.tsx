@@ -3,8 +3,9 @@ import ReactDom from 'react-dom';
 import App from './App'
 import { StoreProvider } from './Store'
 
+
 ReactDom.render(
   <StoreProvider>
-      <App />
+        <App />
   </StoreProvider>
   ,document.getElementById('app-root'));

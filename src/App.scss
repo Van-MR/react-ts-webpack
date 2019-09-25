@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display|Roboto+Mono&display=swap');
+
+
 /*
 *  color variable
 */
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display|Roboto+Mono&display=swap');
-
-$header_color:#636e72;
+$header_color:#222731;
 $priamry_color:#2d3436;
 $text_color:#fff;
+$like_color:red;
+$info_color:yellow;
 
 * {
   margin: 0;
@@ -27,6 +30,7 @@ Header {
   position: sticky;
   top: 0;
   color: $text_color;
+  z-index: 1;
   .header-left{
     display: flex;
     justify-content: center;
@@ -37,7 +41,7 @@ Header {
       height: 60px;
       margin-left: .8em;
       border-radius: 30px;
-      border: 5px solid white;
+      border: 5px solid $text_color;
     }
   }
 }
@@ -47,7 +51,7 @@ Header {
    width: 98vw;
    margin: 20px auto;
    display: grid;
-   grid-template-columns:repeat(auto-fit,minmax(338px,1fr));
+   grid-template-columns:repeat(auto-fill,minmax(338px,1fr));
    grid-row-gap: 15px;
    grid-column-gap: 7px;
 }
@@ -67,7 +71,7 @@ Header {
     }
   }
   .episode-detail {
-     background-color: yellow;
+     background-color: $info_color;
      padding: 0 5px;
      height: 100%;
      font-size: 12px;
@@ -76,7 +80,7 @@ Header {
      justify-content: space-between;
      align-items: center;
      .like{
-       background-color: red;
+       background-color: $like_color;
      }
   }
 }

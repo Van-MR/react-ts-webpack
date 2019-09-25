@@ -1,12 +1,18 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './App.scss';
-import Header from './Header'
-// import List from './List'
-import {  Store } from './Store'
+import Header from './Header';
+import EpisodesList from './EpisodsList';
+import FavEpisods from './FavEpisods'
+import {  Store } from './Store';
+import { IEpisode, IAction, IEpisodeProps } from './interfaces';
 
-const URL = 'https://api.tvmaze.com/singlesearch/shows?q=rick-6-morty&embed=episodes'
+const URL = 'https://api.tvmaze.com/singlesearch/shows?q=rick-6-morty&embed=episodes';
 
 export default function App():JSX.Element {
+  const [showFavList,setShowFavList] = useState(false);
+
+  const setShow = (value:boolean) : void => setShowFavList(value);
+
   const {state,dispatch} = useContext(Store);
 
   useEffect(() => {
@@ -34,38 +40,37 @@ export default function App():JSX.Element {
        })
   }
 
-  const AddToFav = (episode:any) => {
-    console.log(episode);
+  const AddToFav = (episode: IEpisode):IAction => {
+     const episodeInFav = state.favorites.includes(episode);
 
-    dispatch({
+     if(episodeInFav) {
+       return dispatch({
+         type: 'REMOVE_FROM_LIKE',
+         payload: episode
+       })
+     }
+
+     return dispatch({
       type: 'ADD_TO_LIKE',
       payload: episode
     })
   }
 
  const { episodes, favorites } = state;
+
+
+
+ const props:IEpisodeProps = {
+   episodes,
+   favorites,
+   AddToFav
+ }
+
   return (
     <React.Fragment>
-       <Header favorites={favorites}/>
+       <Header favorites={favorites} setShow={setShow}/>
        <section className="episodes-list">
-         {episodes.map((episode: any) => {
-           return (
-             <section key={episode.id} className="episode-item">
-                <div className="episode-pic">
-                  <img  src={episode.image.medium} alt={`ricky and morty ${episode.name}`} />
-                </div>
-                <div className="episode-detail">
-                  <section>
-                    <div>{episode.name}</div>
-                      Season: {episode.season} Number: {episode.number}
-                  </section>
-                  <div onClick={ () => { AddToFav(episode) }} className="fav">
-                     <i className="fas fa-heart" style={episode.like ? {color:'red'} : null}></i>
-                  </div>
-                </div>
-             </section>
-           )
-         })}
+         {  showFavList ? <FavEpisods {...props} /> : <EpisodesList {...props} />}
        </section>
     </React.Fragment>
   )
